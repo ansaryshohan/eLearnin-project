@@ -14,7 +14,7 @@ const Categories = () => {
 
   return (
 
-    <div>
+    <div className='mt-6 sticky top-10'>
       {
         categories?.map(singleCategory => <SingleCategory
           key={singleCategory.id}

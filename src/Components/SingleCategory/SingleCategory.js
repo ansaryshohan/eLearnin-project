@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const SingleCategory = ({singleCategory}) => {
-const {category, id}= singleCategory;
-console.log(singleCategory)
+const SingleCategory = ({ singleCategory }) => {
+  const { category, id } = singleCategory;
+  console.log(singleCategory)
 
   return (
     <div>
-      <Link to={`/courses/${id}`}>{category}</Link>
+      <div className="grid mb-1 mx-auto w-10/12 h-20 rounded-xl bg-primary text-primary-content place-content-center text-center text-xl font-medium p-5">
+        <Link to={`/courses/${id}`}>
+          {category}
+        </Link>
+      </div>
+
     </div>
   );
 };
