@@ -1,25 +1,92 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/ContextProvider';
 
 const Register = () => {
+  const { signInWithEmailPassword, updateProfileName, emailVerify } = useContext(AuthContext);
 
   const [userInfo, setUserInfo] = useState({
     fullName: "",
-    photUrl:"",
+    photoUrl: "",
     email: "",
     password: ""
   })
+  const [error, setError] = useState({
+    emailError: "",
+    passwordError: "",
+    overall: ""
+  })
 
-  const handleName=(e)=>{
-    const name= e.target.value;
-    setUserInfo({...userInfo,fullName: name })
-    console.log(userInfo)
-    
+  const handleName = (e) => {
+    const name = e.target.value;
+    setUserInfo({ ...userInfo, fullName: name })
   }
+  const handlePhotUrl = (e) => {
+    const photo = e.target.value;
+    setUserInfo({ ...userInfo, photoUrl: photo })
+  }
+
+  // email error handling here..
+  const handleEmail = (e) => {
+    const email = e.target.value;
+    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+      setError({ ...error, emailError: "please provide a valid email" })
+      setUserInfo({ ...userInfo, email: "" })
+    } else {
+      setError({ ...error, emailError: "" })
+      setUserInfo({ ...userInfo, email: email })
+    }
+  }
+
+  // handlings password error here...
+  const handlePassword = (e) => {
+    const password = e.target.value;
+
+    if (password.length < 6) {
+      setError({ ...error, passwordError: "password should be of 6 character" })
+      setUserInfo({ ...userInfo, password: "" })
+    }
+    else if (!/[A-Z]/.test(password)) {
+      setError({ ...error, passwordError: "password should have a Capital Letter" })
+      setUserInfo({ ...userInfo, password: "" })
+    }
+    else if (!/[^A-Za-z0-9]/.test(password)) {
+      setError({ ...error, passwordError: "password should have a special character" })
+      setUserInfo({ ...userInfo, password: "" })
+    }
+    else {
+      setError({ ...error, passwordError: "" })
+      setUserInfo({ ...userInfo, password: password })
+    }
+  }
+
+  // the form submit handle function..
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+
+    signInWithEmailPassword(userInfo.email, userInfo.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+
+
+        // updateing profile name and photourl
+        updateProfileName(userInfo.fullName, userInfo.photoUrl)
+          .then(() => { })
+          .catch(error => { console.error(error) })
+
+        // email verify process
+        emailVerify()
+          .then(() => { })
+          .catch(err => console.error(err))
+
+      })
+
+      .catch(err => console.error(err))
+
   }
+  console.log(userInfo);
 
   return (
     <div className=" min-h-screen bg-base-200">
@@ -35,9 +102,9 @@ const Register = () => {
               </label>
               {/* this is the name field */}
               <input
-               onChange={handleName}
                 type="text"
                 name='full-name'
+                onChange={handleName}
                 placeholder="full name"
                 className="input input-bordered" />
             </div>
@@ -48,6 +115,7 @@ const Register = () => {
               <input
                 type="text"
                 name='photUrl'
+                onChange={handlePhotUrl}
                 placeholder="your photo url here"
                 className="input input-bordered" />
             </div>
@@ -58,9 +126,11 @@ const Register = () => {
               <input
                 type="email"
                 name='email'
+                onChange={handleEmail}
                 placeholder="email"
                 className="input input-bordered"
                 required />
+                {error.emailError&& <p className='text-red-600'>{error.emailError}</p>}
             </div>
 
             <div className="form-control">
@@ -71,9 +141,12 @@ const Register = () => {
               <input
                 type="password"
                 name='password'
+                onChange={handlePassword}
                 placeholder="password"
                 className="input input-bordered"
                 required />
+
+              {!error.passwordError ? <></> : <p className='text-red-600'>{error.passwordError}</p>}
 
               <label className="label">
                 <Link href="#" className="label-text-alt link-success link-hover">Forgot password?</Link>
@@ -90,6 +163,7 @@ const Register = () => {
                   to="/login"
                   className="link-success uppercase link-hover"
                 > login</Link>
+                {userInfo.fullName}
               </small>
             </p>
           </form>
@@ -99,4 +173,5 @@ const Register = () => {
   );
 };
 
-export default Register;
+
+export default Register
