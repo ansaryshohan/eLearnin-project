@@ -1,59 +1,51 @@
-import React, {  useState } from 'react';
+import React, { useContext, useState } from 'react';
+import './header.css'
+import { FaLaptopCode, FaMoon, FaSun } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../Context/ContextProvider';
 
 
 const Header = () => {
-
-
+  const [darkmode,setDarkmode]=useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const{user} = useContext(AuthContext);
+
+
   return (
-    <div className="sm:max-w-xl md:max-w-full lg:w-full">
-      <div className="relative flex items-center justify-around bg-slate-500 p-6">
+    <div className="sm:max-w-full md:max-w-full lg:w-full">
+      <div className="relative flex items-center justify-around bg-[#00858F] p-6 text-white">
         <div className="flex items-center">
           <Link
             to="/"
-            aria-label="Company"
-            title="Company"
+            aria-label="Learning website"
+            title="Learning website"
             className="inline-flex items-center mr-8"
           >
-            <svg
-              className="w-8 text-deep-purple-accent-400"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              stroke="currentColor"
-              fill="none"
-            >
-              <rect x="3" y="1" width="7" height="12" />
-              <rect x="3" y="17" width="7" height="6" />
-              <rect x="14" y="1" width="7" height="6" />
-              <rect x="14" y="11" width="7" height="12" />
-            </svg>
-            <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-              Company
+            <FaLaptopCode className='text-4xl text-orange-300 mr-1' />
+            <span className="ml-2 text-3xl font-bold tracking-wide text-white">
+              E<span className='text-orange-300'>Learner</span>
             </span>
           </Link>
         </div>
         <div>
-        <ul className="flex items-center hidden space-x-8 lg:flex lg:px-8 lg:justify-between">
+          <ul className="flex items-center hidden space-x-8 lg:flex lg:px-8 lg:justify-between lg:gap-6 text-2xl">
             <li>
               <NavLink
                 to="/home"
                 aria-label="Home"
                 title="Home"
-                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
                 Home
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/courses"
+                to="/courses/1"
                 aria-label="Courses"
                 title="Courses"
-                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                className="font-medium tracking-wide text-text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
                 Courses
               </NavLink>
@@ -63,7 +55,7 @@ const Header = () => {
                 to="/blog"
                 aria-label="Blog"
                 title="Blog"
-                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
                 Blog
               </NavLink>
@@ -73,29 +65,52 @@ const Header = () => {
                 to="/faq"
                 aria-label="Frequently asked questions"
                 title="Frequently asked questions"
-                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
                 FAQ
               </NavLink>
             </li>
+            {/*dark mode button toggle  */}
+        <div  onClick={()=>setDarkmode(!darkmode)}
+        className="text-[#D6DFFF]">
+          {
+          !darkmode? 
+          <button  className='flex items-center gap-2'> <FaSun/> light</button>
+          :
+           <button className='flex items-center gap-2'><FaMoon/> dark</button>
+          }
+          </div>
           </ul>
         </div>
-        <ul className="flex items-center hidden space-x-8 lg:flex">
+        
+        {
+          user.uid?
+          <ul className="flex items-center hidden space-x-8 lg:flex">
+          <li>
+            <NavLink
+              to="/logout"
+              aria-label="Sign out"
+              title="Sign out"
+              className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
+            >
+              Sign out
+            </NavLink>
+          </li>
+        </ul>
+          :
+          <ul className="flex items-center hidden space-x-8 lg:flex">
           <li>
             <NavLink
               to="/login"
               aria-label="Sign in"
               title="Sign in"
-              className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+              className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
             >
               Sign in
             </NavLink>
           </li>
-
-          {/*ekhn e ekta conditional rendering dibo.  */}
-
-
         </ul>
+        }
 
         <div className="lg:hidden">
 
@@ -122,33 +137,19 @@ const Header = () => {
           </button>
 
           {isMenuOpen && (
-            <div className="absolute top-0 left-0 w-full">
-              <div className="p-5 bg-white border rounded shadow-sm">
+            <div className="absolute top-0 left-0 z-10 w-full">
+              <div className="p-5 bg-[#00858F] border rounded shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <Link
-                      to="/home"
-                      aria-label="Company"
-                      title="Company"
-                      className="inline-flex items-center"
+                      to="/"
+                      aria-label="Learning website"
+                      title="Learning website"
+                      className="inline-flex items-center mr-8"
                     >
-                      <svg
-                        className="w-8 text-deep-purple-accent-400"
-                        viewBox="0 0 24 24"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeMiterlimit="10"
-                        stroke="currentColor"
-                        fill="none"
-                      >
-                        <rect x="3" y="1" width="7" height="12" />
-                        <rect x="3" y="17" width="7" height="6" />
-                        <rect x="14" y="1" width="7" height="6" />
-                        <rect x="14" y="11" width="7" height="12" />
-                      </svg>
-                      <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                        Company
+                      <FaLaptopCode className='text-4xl text-orange-300 mr-1' />
+                      <span className="ml-2 text-3xl font-bold tracking-wide text-white">
+                        E<span className='text-orange-300'>Learner</span>
                       </span>
                     </Link>
                   </div>
@@ -176,7 +177,7 @@ const Header = () => {
                         to="/home"
                         aria-label="Home"
                         title="Home"
-                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                        className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Home
                       </NavLink>
@@ -186,7 +187,7 @@ const Header = () => {
                         to="/courses"
                         aria-label="Courses"
                         title="Courses"
-                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                        className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Courses
                       </NavLink>
@@ -196,7 +197,7 @@ const Header = () => {
                         to="/blog"
                         aria-label="Blog"
                         title="Blog"
-                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                        className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Blog
                       </NavLink>
@@ -206,7 +207,7 @@ const Header = () => {
                         to="/faq"
                         aria-label="Frequently asked questions"
                         title="Frequently asked questions"
-                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                        className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         FAQ
                       </NavLink>
@@ -216,7 +217,7 @@ const Header = () => {
                         to="/login"
                         aria-label="Sign in"
                         title="Sign in"
-                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                        className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Sign in
                       </NavLink>

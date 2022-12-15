@@ -4,6 +4,7 @@ import app from '../Firebase/Firebase.init';
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
+export const profilepic= 'https://img.freepik.com/free-vector/farmer-using-agricultural-technology_53876-120543.jpg?w=740&t=st=1671081419~exp=1671082019~hmac=7b2e72a494e10ca201d337213ba4df3ccbf0f4a8dfa8a0e39cb358a6758c8e72';
 
 const ContextProvider = ({ children }) => {
 
