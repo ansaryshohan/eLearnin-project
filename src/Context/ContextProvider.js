@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'
 import app from '../Firebase/Firebase.init';
 
 export const AuthContext = createContext();
@@ -9,7 +9,7 @@ const auth = getAuth(app);
 const ContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
-  const [loading,setloading]=useState(true);
+  const [loading, setloading] = useState(true);
 
   const createUserWithEmailPassword = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -19,12 +19,16 @@ const ContextProvider = ({ children }) => {
     return updateProfile(auth.currentUser, { displayName: name, photoURL: photoUrl })
   }
 
-  
+
   const verifyEmail = () => {
     return sendEmailVerification(auth.currentUser)
   }
-  
-  const signIn=(email,password)=>{ return signInWithEmailAndPassword(auth, email,password)}
+
+  const signIn = (email, password) => { return signInWithEmailAndPassword(auth, email, password) }
+
+  const forgetPassword=(email)=>{
+    return sendPasswordResetEmail(auth, email)
+  }
 
 
   useEffect(() => {
@@ -40,7 +44,16 @@ const ContextProvider = ({ children }) => {
   }, [])
 
 
-  const authInfo = { user,loading,createUserWithEmailPassword,updateProfileInfo, verifyEmail,signIn }
+  const authInfo = {
+    user,
+    loading,
+    createUserWithEmailPassword,
+    updateProfileInfo,
+    verifyEmail,
+    signIn,
+    forgetPassword,
+  }
+
   return (
     <AuthContext.Provider value={authInfo}>
       {children}

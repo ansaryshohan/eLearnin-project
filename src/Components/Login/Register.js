@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/ContextProvider';
 
 const Register = () => {
   const { createUserWithEmailPassword, updateProfileInfo, verifyEmail } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [userInfo, setUserInfo] = useState({
     fullName: "",
@@ -67,29 +68,35 @@ const Register = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    const form = e.target;
 
     createUserWithEmailPassword(userInfo.email, userInfo.password)
-    .then((result) => {
-      const user = result.user;
-      // Form.reset();
-      
-      if(user.uid){
-        // updateing profile name and photourl
-        updateProfileInfo(userInfo.fullName, userInfo.photoUrl)
-          .then(() => { console.log("display name set done")})
-          .catch(error => { console.error(error) })
+      .then((result) => {
+        const user = result.user;
 
-          if(user.email){
+        if (user.uid) {
+          // updateing profile name and photourl
+          updateProfileInfo(userInfo.fullName, userInfo.photoUrl)
+            .then(() => { })
+            .catch(error => { console.error(error) })
+
+          if (user.email) {
             verifyEmail()
-            .then(()=>{ console.log("Email verification code send to your email.")})
-            .catch(err=> console.error(err))
+              .then(() => {
+                 toast.success("Email verification code send to your email.");
+                 navigate('/login')
+              })
+              .catch(err => console.error(err))
           }
-       
-      }
-      console.log(user);
-    })
 
-      .catch(err => console.error(err))
+        }
+        form.reset()
+        // console.log(user);
+      })
+
+      .catch(err => {
+        toast.error(`${err}`)
+      })
 
   }
   // console.log(userInfo);
@@ -97,7 +104,7 @@ const Register = () => {
   return (
     <div className=" min-h-screen bg-base-200">
       <div className="flex flex-col items-center gap-7 lg:flex">
-        <div className="text-center lg:text-left  mt-14 text-green-600">
+        <div className="text-center lg:text-left  mt-14 text-accent">
           <h1 className="text-5xl font-bold">Register!</h1>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -136,7 +143,7 @@ const Register = () => {
                 placeholder="email"
                 className="input input-bordered"
                 required />
-                {error.emailError&& <p className='text-red-600'>{error.emailError}</p>}
+              {error.emailError && <p className='text-red-600'>{error.emailError}</p>}
             </div>
 
             <div className="form-control">
@@ -154,9 +161,6 @@ const Register = () => {
 
               {!error.passwordError ? <></> : <p className='text-red-600'>{error.passwordError}</p>}
 
-              <label className="label">
-                <Link href="#" className="label-text-alt link-success link-hover">Forgot password?</Link>
-              </label>
             </div>
             <div className="form-control mt-3">
               <button className="btn btn-accent text-xl font-bold">
@@ -169,7 +173,6 @@ const Register = () => {
                   to="/login"
                   className="link-success uppercase link-hover"
                 > login</Link>
-                {userInfo.fullName}
               </small>
             </p>
           </form>
