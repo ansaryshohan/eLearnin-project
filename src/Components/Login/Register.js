@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { Form, Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/ContextProvider';
 
 const Register = () => {
-  const { signInWithEmailPassword, updateProfileName, emailVerify } = useContext(AuthContext);
+  const { createUserWithEmailPassword, updateProfileInfo, verifyEmail } = useContext(AuthContext);
 
   const [userInfo, setUserInfo] = useState({
     fullName: "",
@@ -60,33 +61,38 @@ const Register = () => {
     }
   }
 
+  // console.log( userInfo);
+
   // the form submit handle function..
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    signInWithEmailPassword(userInfo.email, userInfo.password)
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
-
-
+    createUserWithEmailPassword(userInfo.email, userInfo.password)
+    .then((result) => {
+      const user = result.user;
+      // Form.reset();
+      
+      if(user.uid){
         // updateing profile name and photourl
-        updateProfileName(userInfo.fullName, userInfo.photoUrl)
-          .then(() => { })
+        updateProfileInfo(userInfo.fullName, userInfo.photoUrl)
+          .then(() => { console.log("display name set done")})
           .catch(error => { console.error(error) })
 
-        // email verify process
-        emailVerify()
-          .then(() => { })
-          .catch(err => console.error(err))
-
-      })
+          if(user.email){
+            verifyEmail()
+            .then(()=>{ console.log("Email verification code send to your email.")})
+            .catch(err=> console.error(err))
+          }
+       
+      }
+      console.log(user);
+    })
 
       .catch(err => console.error(err))
 
   }
-  console.log(userInfo);
+  // console.log(userInfo);
 
   return (
     <div className=" min-h-screen bg-base-200">

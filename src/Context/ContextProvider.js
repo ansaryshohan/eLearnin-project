@@ -4,22 +4,23 @@ import app from '../Firebase/Firebase.init';
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
-export const profilepic= 'https://img.freepik.com/free-vector/farmer-using-agricultural-technology_53876-120543.jpg?w=740&t=st=1671081419~exp=1671082019~hmac=7b2e72a494e10ca201d337213ba4df3ccbf0f4a8dfa8a0e39cb358a6758c8e72';
+// export const profilepic= 'https://img.freepik.com/free-vector/farmer-using-agricultural-technology_53876-120543.jpg?w=740&t=st=1671081419~exp=1671082019~hmac=7b2e72a494e10ca201d337213ba4df3ccbf0f4a8dfa8a0e39cb358a6758c8e72';
 
 const ContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
+  const [loading,setloading]=useState(true);
 
-  const signInWithEmailPassword = (email, password) => {
+  const createUserWithEmailPassword = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
   }
 
-  const updateProfileName = (name, photoUrl) => {
+  const updateProfileInfo = (name, photoUrl) => {
     return updateProfile(auth.currentUser, { displayName: name, photoURL: photoUrl })
   }
 
   
-  const emailVerify = () => {
+  const verifyEmail = () => {
     return sendEmailVerification(auth.currentUser)
   }
   
@@ -31,6 +32,7 @@ const ContextProvider = ({ children }) => {
       if (currentUser) {
         setUser(currentUser)
         // console.log(user)
+        setloading(false)
       }
     })
 
@@ -38,7 +40,7 @@ const ContextProvider = ({ children }) => {
   }, [])
 
 
-  const authInfo = { user,signInWithEmailPassword, updateProfileName, emailVerify,signIn }
+  const authInfo = { user,loading,createUserWithEmailPassword,updateProfileInfo, verifyEmail,signIn }
   return (
     <AuthContext.Provider value={authInfo}>
       {children}

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import './header.css'
 import { FaLaptopCode, FaMoon, FaSun } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
-import { AuthContext } from '../../Context/ContextProvider';
+import { AuthContext, profilepic } from '../../Context/ContextProvider';
 
 
 const Header = () => {
@@ -84,7 +84,7 @@ const Header = () => {
         </div>
         
         {
-          user.uid?
+          user?
           <ul className="flex items-center hidden space-x-8 lg:flex">
           <li>
             <NavLink
@@ -111,6 +111,10 @@ const Header = () => {
           </li>
         </ul>
         }
+        {/* {
+          user.photURL? <img src={user.photoURL} alt="" />:
+          <img src={profilepic} alt="" className='border bottom-3' />
+        } */}
 
         <div className="lg:hidden">
 

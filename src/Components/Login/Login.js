@@ -70,6 +70,7 @@ const Login = () => {
               </small>
             </p>
           </form>
+          <div className="divider">OR Sign In With</div>
         </div>
       </div>
     </div>
