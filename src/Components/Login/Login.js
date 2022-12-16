@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/ContextProvider';
 
 const Login = () => {
   const [givenEmail, setGivenEmail]=useState('')
   const { signIn, forgetPassword } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location=useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ const Login = () => {
       .then(res => {
         const user = res.user;
         console.log(user)
-        navigate('/')
+        navigate(from, {replace:true})
         toast.success('welcome to eLearning platform')
       })
       .catch(

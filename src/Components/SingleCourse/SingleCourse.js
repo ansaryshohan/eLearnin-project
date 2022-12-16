@@ -7,8 +7,8 @@ const SingleCourse = ({ course }) => {
   // console.log(course)
 
   return (
-    <div>
-      <div className="card w-96 bg-base-100 shadow-xl">
+    <div className='w-[390px] h-[520px]'>
+      <div className="card w-[350px] h-full bg-base-100 shadow-xl mx-auto">
         <figure><img src={image} alt="Shoes" className='h-60 w-full  object-cover' /></figure>
         <div className="card-body pb-3 pt-7 px-7">
           <h2 className="card-title relative">
@@ -32,7 +32,7 @@ const SingleCourse = ({ course }) => {
           </div>
         </div>
         <Link to={`/course/${id}`}>
-          <button className="btn btn-success w-full text-xl font-semibold text-white">
+          <button className="btn btn-accent w-full text-xl font-semibold text-white">
             View details
           </button>
         </Link>

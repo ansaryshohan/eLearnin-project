@@ -8,7 +8,7 @@ const Courses = () => {
       <div className='col-span-1'> 
            <Categories></Categories>
       </div>
-      <div className='col-span-3'>
+      <div className='col-span-3 pr-3'>
          <Outlet></Outlet>
       </div>
       
