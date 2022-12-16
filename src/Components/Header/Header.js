@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import './header.css'
 import { FaLaptopCode, FaMoon, FaRegHandPointLeft, FaSun, FaUserGraduate } from 'react-icons/fa';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { AuthContext, profilepic } from '../../Context/ContextProvider';
+import { AuthContext } from '../../Context/ContextProvider';
 import { toast } from 'react-hot-toast';
 
 
@@ -14,7 +14,6 @@ const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  console.log(user);
 
 
   const handleStickyNav = () => {
@@ -53,7 +52,7 @@ const Header = () => {
             </Link>
           </div>
           <div>
-            <ul className="flex items-center hidden space-x-8 lg:flex lg:px-8 lg:justify-between lg:gap-6 text-2xl">
+            <ul className="sm:flex items-center hidden space-x-8 lg:flex lg:px-8 lg:justify-between lg:gap-6 text-2xl">
               <li>
                 <NavLink
                   to="/home"
@@ -110,7 +109,7 @@ const Header = () => {
           {/* the sign in and signOut toggle starts */}
           {
             user?.email ?
-              <div className="flex items-center hidden space-x-8 lg:flex lg:justify-center ">
+              <div className="sm:flex items-center hidden space-x-8 lg:flex lg:justify-center ">
                 <div>
                   <button          
                   aria-label="Sign out"
@@ -138,11 +137,11 @@ const Header = () => {
               :
               <NavLink 
               to="/login"
-              className="flex items-center hidden space-x-8 lg:flex lg:justify-center ">
+              className="sm:flex items-center hidden space-x-8 lg:flex lg:justify-center ">
               <div className='flex justify-evenly items-center gap-2'>
                 <button          
-                aria-label="Sign out"
-                  title="Sign out"
+                aria-label="Sign In"
+                  title="Sign In"
                   className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400 text-center"
                   
                 >

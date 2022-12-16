@@ -7,8 +7,8 @@ const SingleCourse = ({ course }) => {
   // console.log(course)
 
   return (
-    <div className='w-[390px] h-[520px]'>
-      <div className="card w-[350px] h-full bg-base-100 shadow-xl mx-auto">
+    <div className='h-[520px]'>
+      <div className="card w-4/5 h-full bg-base-100 shadow-xl mx-auto sm:mb-6">
         <figure><img src={image} alt="Shoes" className='h-60 w-full  object-cover' /></figure>
         <div className="card-body pb-3 pt-7 px-7">
           <h2 className="card-title relative">

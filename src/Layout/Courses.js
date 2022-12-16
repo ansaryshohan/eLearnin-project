@@ -4,11 +4,11 @@ import Categories from '../Components/Categories/Categories';
 
 const Courses = () => {
   return (
-    <div className='grid grid-cols-4'>
-      <div className='col-span-1'> 
+    <div className='md:grid md:grid-cols-4'>
+      <div className='md:col-span-1'> 
            <Categories></Categories>
       </div>
-      <div className='col-span-3 pr-3'>
+      <div className='md:col-span-3 md:pr-3'>
          <Outlet></Outlet>
       </div>
       
