@@ -10,7 +10,7 @@ const Blog = () => {
       </div>
       <div className='w-4/5 mx-auto pl-10 py-8 border  mt-10  shadow-xl mb-5 rounded-xl'>
         <h1 className='text-xl font-medium text-[#028090] mb-3'>Q. Why are you using firebase? What other options do you have to implement authentication?</h1>
-        <p className='text-lg font-normal pl-4'> Firbase is a product of google. i am using it for hosting my sites and for a secured authentication process. the management of data is a tough process. so i am trusting google with my datas.<br />
+        <p className='text-lg font-normal pl-4'> Firebase is a product of google. i am using it for hosting my sites and for a secured authentication process. the management of data is a tough process. so i am trusting google with my datas.<br />
           Other authentication option  other than firebase are: <br /> 1. Okta. <br />2. Auth0. <br />3.MongoDB. <br />4.JSON web token. </p>
       </div>
       <div className='w-4/5 mx-auto pl-10 py-8 border  mt-10  shadow-xl mb-5 rounded-xl'>
