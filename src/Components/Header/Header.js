@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import './header.css'
-import { FaLaptopCode, FaMoon, FaSun, FaUserGraduate } from 'react-icons/fa';
+import { FaLaptopCode, FaMoon, FaRegHandPointLeft, FaSun, FaUserGraduate } from 'react-icons/fa';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext, profilepic } from '../../Context/ContextProvider';
 import { toast } from 'react-hot-toast';
@@ -48,7 +48,7 @@ const Header = () => {
             >
               <FaLaptopCode className='text-4xl text-orange-300 mr-1' />
               <span className="ml-2 text-3xl font-bold tracking-wide text-white">
-                E<span className='text-orange-300'>Learner</span>
+                edu<span className='text-orange-300'>BOOK</span>
               </span>
             </Link>
           </div>
@@ -136,18 +136,21 @@ const Header = () => {
                 </div>
               </div>
               :
-              <ul className="flex items-center hidden space-x-8 lg:flex">
-                <li>
-                  <NavLink
-                    to="/login"
-                    aria-label="Sign in"
-                    title="Sign in"
-                    className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400"
-                  >
-                    Sign in
-                  </NavLink>
-                </li>
-              </ul>
+              <NavLink 
+              to="/login"
+              className="flex items-center hidden space-x-8 lg:flex lg:justify-center ">
+              <div className='flex justify-evenly items-center gap-2'>
+                <button          
+                aria-label="Sign out"
+                  title="Sign out"
+                  className="font-medium tracking-wide text-white transition-colors duration-200 hover:text-deep-purple-accent-400 text-center"
+                  
+                >
+                  Sign In
+                </button>
+               <FaRegHandPointLeft/>
+              </div>
+              </NavLink>
           }
           {/* {
           user.photURL? <img src={user.photoURL} alt="" />:

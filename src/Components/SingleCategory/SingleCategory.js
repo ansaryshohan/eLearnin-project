@@ -7,7 +7,7 @@ const SingleCategory = ({ singleCategory }) => {
 
   return (
     <div>
-      <div className="grid mb-1 mx-auto w-10/12 h-20 rounded-xl bg-success text-primary-content place-content-center text-center text-xl font-medium p-5">
+      <div className="grid mb-1 mx-auto w-10/12 h-20 rounded-xl bg-accent text-primary-content place-content-center text-center text-xl font-medium p-5">
         <Link to={`/courses/${id}`}>
           {category}
         </Link>
